@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Presentation.Presentation.Controllers;
 
-[Route("api/[controller]")]
+[Route("[controller]")]
 [ApiController]
 public class StartupController : ControllerBase
 {
@@ -18,21 +18,25 @@ public class StartupController : ControllerBase
         _service = service;
     }
 
-    [HttpGet("applydatabasechanges")]
+    [HttpGet("apply-database-changes")]
     //[AuthorizationFilter]
     [TransactionScopeFilter]
     public async Task<IActionResult> ApplyDatabaseChanges()
     {
         var response = await _service.ApplyDatabaseChanges();
-        return !response.Success ? CustomErrorProcessor.Process(response) : NoContent();
+        return !response.Success
+            ? CustomErrorProcessor.Process(response)
+            : NoContent();
     }
 
-    [HttpGet("dropandcreatedatabase")]
+    [HttpGet("drop-and-create-database")]
     //[AuthorizationFilter]
     public async Task<IActionResult> DropAndCreateDatabase()
     {
         var response = await _service.DropAndCreateDatabase();
-        return !response.Success ? CustomErrorProcessor.Process(response) : NoContent();
+        return !response.Success
+            ? CustomErrorProcessor.Process(response)
+            : NoContent();
     }
 
     [HttpGet("createtables")]
@@ -41,7 +45,9 @@ public class StartupController : ControllerBase
     public async Task<IActionResult> CreateTables()
     {
         var response = await _service.CreateTables();
-        return !response.Success ? CustomErrorProcessor.Process(response) : NoContent();
+        return !response.Success
+            ? CustomErrorProcessor.Process(response)
+            : NoContent();
     }
 
     [HttpGet("droptables")]
@@ -50,7 +56,9 @@ public class StartupController : ControllerBase
     public async Task<IActionResult> DropTables()
     {
         var response = await _service.DropTables();
-        return !response.Success ? CustomErrorProcessor.Process(response) : NoContent();
+        return !response.Success
+            ? CustomErrorProcessor.Process(response)
+            : NoContent();
     }
 
     [HttpGet("insertcustomrecords")]
@@ -59,7 +67,9 @@ public class StartupController : ControllerBase
     public async Task<IActionResult> InsertCustomRecords()
     {
         var response = await _service.InsertCustomRecords();
-        return !response.Success ? CustomErrorProcessor.Process(response) : NoContent();
+        return !response.Success
+            ? CustomErrorProcessor.Process(response)
+            : NoContent();
     }
 
     [HttpGet("insertdefaultrecords")]
@@ -68,6 +78,8 @@ public class StartupController : ControllerBase
     public async Task<IActionResult> InsertDefaultRecords()
     {
         var response = await _service.InsertDefaultRecords();
-        return !response.Success ? CustomErrorProcessor.Process(response) : NoContent();
+        return !response.Success
+            ? CustomErrorProcessor.Process(response)
+            : NoContent();
     }
 }

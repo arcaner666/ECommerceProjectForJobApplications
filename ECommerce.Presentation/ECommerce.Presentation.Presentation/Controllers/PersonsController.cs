@@ -5,7 +5,6 @@ using ECommerce.Presentation.Presentation.Extensions;
 using ECommerce.Presentation.Presentation.ModelBinders;
 using ECommerce.Presentation.Presentation.Validation.FluentValidation.Validators;
 using ECommerce.Service.Contracts;
-using ECommerce.Service.Contracts.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Presentation.Presentation.Controllers;
@@ -14,54 +13,43 @@ namespace ECommerce.Presentation.Presentation.Controllers;
 [ApiController]
 public class PersonsController : ControllerBase
 {
-    private readonly IPersonAdvService _advService;
     private readonly IPersonService _service;
 
     public PersonsController(
-        IPersonAdvService advService,
         IPersonService service
     )
     {
-        _advService = advService;
         _service = service;
     }
 
-    [HttpPost("createadmin")]
-    [AuthorizationFilter]
-    [ValidationFilter(typeof(PersonExtForCreateDtoValidator))]
-    [TransactionScopeFilter]
-    public async Task<IActionResult> CreateAdmin([FromBody] PersonExtForCreateDto personExtForCreateDto)
-    {
-        var response = await _advService.CreateAdminAsync(personExtForCreateDto);
-        return !response.Success
-            ? CustomErrorProcessor.Process(response)
-            : CreatedAtRoute(
-                "GetPersonById",
-                new { id = response.Convert<PersonDto>().Data.PersonId },
-                response.Convert<PersonDto>().Data);
-    }
+    //[HttpPost("createadmin")]
+    //[AuthorizationFilter]
+    //[ValidationFilter(typeof(PersonExtForCreateDtoValidator))]
+    //[TransactionScopeFilter]
+    //public async Task<IActionResult> CreateAdmin([FromBody] PersonExtForCreateDto personExtForCreateDto)
+    //{
+    //    var response = await _service.CreateAdminAsync(personExtForCreateDto);
+    //    return !response.Success
+    //        ? CustomErrorProcessor.Process(response)
+    //        : CreatedAtRoute(
+    //            "GetPersonById",
+    //            new { id = response.Convert<PersonDto>().Data.PersonId },
+    //            response.Convert<PersonDto>().Data);
+    //}
 
-    [HttpPost("createuser")]
-    [ValidationFilter(typeof(PersonExtForCreateDtoValidator))]
-    [TransactionScopeFilter]
-    public async Task<IActionResult> CreateUser([FromBody] PersonExtForCreateDto personExtForCreateDto)
-    {
-        var response = await _advService.CreateUserAsync(personExtForCreateDto);
-        return !response.Success
-            ? CustomErrorProcessor.Process(response)
-            : CreatedAtRoute(
-                "GetPersonById",
-                new { id = response.Convert<PersonDto>().Data.PersonId },
-                response.Convert<PersonDto>().Data);
-    }
-
-    [HttpGet]
-    [AuthorizationFilter]
-    public async Task<IActionResult> GetAll()
-    {
-        var response = await _service.GetAllAsync();
-        return !response.Success ? CustomErrorProcessor.Process(response) : Ok(response.Convert<List<PersonDto>>().Data);
-    }
+    //[HttpPost("createuser")]
+    //[ValidationFilter(typeof(PersonExtForCreateDtoValidator))]
+    //[TransactionScopeFilter]
+    //public async Task<IActionResult> CreateUser([FromBody] PersonExtForCreateDto personExtForCreateDto)
+    //{
+    //    var response = await _service.CreateUserAsync(personExtForCreateDto);
+    //    return !response.Success
+    //        ? CustomErrorProcessor.Process(response)
+    //        : CreatedAtRoute(
+    //            "GetPersonById",
+    //            new { id = response.Convert<PersonDto>().Data.PersonId },
+    //            response.Convert<PersonDto>().Data);
+    //}
 
     [HttpGet("{id}", Name = "GetPersonById")]
     [AuthorizationFilter]
@@ -95,31 +83,31 @@ public class PersonsController : ControllerBase
         return !response.Success ? CustomErrorProcessor.Process(response) : Ok(response.Convert<List<PersonExtDto>>().Data);
     }
 
-    [HttpPost("login")]
-    [ValidationFilter(typeof(PersonLoginDtoValidator))]
-    [TransactionScopeFilter]
-    public async Task<IActionResult> Login([FromBody] PersonLoginDto personLoginDto)
-    {
-        var response = await _advService.LoginAsync(personLoginDto);
-        return !response.Success ? CustomErrorProcessor.Process(response) : Ok(response.Convert<PersonLoginResponseDto>().Data);
-    }
+    //[HttpPost("login")]
+    //[ValidationFilter(typeof(PersonLoginDtoValidator))]
+    //[TransactionScopeFilter]
+    //public async Task<IActionResult> Login([FromBody] PersonLoginDto personLoginDto)
+    //{
+    //    var response = await _service.LoginAsync(personLoginDto);
+    //    return !response.Success ? CustomErrorProcessor.Process(response) : Ok(response.Convert<PersonLoginResponseDto>().Data);
+    //}
 
-    [HttpGet("logout")]
-    [TransactionScopeFilter]
-    public async Task<IActionResult> Logout()
-    {
-        var response =
-            await _advService.LogoutAsync(HttpContext.User.PersonId());
-        return !response.Success ? CustomErrorProcessor.Process(response) : NoContent();
-    }
+    //[HttpGet("logout")]
+    //[TransactionScopeFilter]
+    //public async Task<IActionResult> Logout()
+    //{
+    //    var response =
+    //        await _service.LogoutAsync(HttpContext.User.PersonId());
+    //    return !response.Success ? CustomErrorProcessor.Process(response) : NoContent();
+    //}
 
-    [HttpPost("refreshaccesstoken")]
-    [ValidationFilter(typeof(PersonTokenDtoValidator))]
-    public async Task<IActionResult> RefreshAccessToken([FromBody] PersonTokenDto personTokenDto)
-    {
-        var response = await _advService.RefreshAccessTokenAsync(personTokenDto);
-        return !response.Success ? CustomErrorProcessor.Process(response) : Ok(response.Convert<PersonTokenDto>().Data);
-    }
+    //[HttpPost("refreshaccesstoken")]
+    //[ValidationFilter(typeof(PersonTokenDtoValidator))]
+    //public async Task<IActionResult> RefreshAccessToken([FromBody] PersonTokenDto personTokenDto)
+    //{
+    //    var response = await _service.RefreshAccessTokenAsync(personTokenDto);
+    //    return !response.Success ? CustomErrorProcessor.Process(response) : Ok(response.Convert<PersonTokenDto>().Data);
+    //}
 
     [HttpPut("{id}")]
     [AuthorizationFilter]

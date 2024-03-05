@@ -89,7 +89,7 @@ public class ClaimsController : ControllerBase
     }
 
     [HttpGet]
-    [AuthorizationFilter]
+    //[AuthorizationFilter]
     public async Task<IActionResult> GetListByFilter([FromQuery] ClaimFilter? filter)
     {
         var response = await _service.GetListByFilterAsync(filter);
@@ -99,7 +99,7 @@ public class ClaimsController : ControllerBase
     }
 
     [HttpGet("single")]
-    [AuthorizationFilter]
+    //[AuthorizationFilter]
     public async Task<IActionResult> GetSingleByFilter([FromQuery] ClaimFilter filter)
     {
         var response = await _service.GetSingleByFilterAsync(filter);

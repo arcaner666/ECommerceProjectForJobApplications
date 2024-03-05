@@ -109,7 +109,6 @@ public static class ServiceExtensions
         services.AddScoped<IClaimDefaultService, ClaimDefaultService>();
         services.AddScoped<IClaimService, ClaimService>();
 
-        services.AddScoped<IPersonAdvService, PersonAdvService>();
         services.AddScoped<IPersonCustomService, PersonCustomService>();
         services.AddScoped<IPersonService, PersonService>();
 

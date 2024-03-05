@@ -43,7 +43,7 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     public async Task<T?> GetByIdAsync(T entity)
     {
         using var connection = RepositoryContext.CreateProjectConnection();
-        var searchedEntity = await connection.GetAsync<T>(entity);
+        var searchedEntity = await connection.GetAsync(entity);
         return searchedEntity;
     }
 
